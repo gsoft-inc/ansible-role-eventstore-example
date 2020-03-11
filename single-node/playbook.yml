@@ -1,0 +1,8 @@
+- hosts: all
+  roles:
+    - eventstore
+
+  vars:
+  - eventstore_ext_ip: "{{ ansible_default_ipv4.address }}"
+  - eventstore_admin_new_password: "dont_forget_to_change_it"
+
