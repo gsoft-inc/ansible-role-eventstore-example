@@ -1,6 +1,6 @@
 ## How To
 
-- Create a `vars.yml` file with the required parameters (see `vars.example.yml`).
+- Navigate to either the `single-node` or `cluster` folder
 - Start the Vagrant machine with `vagrant up`.
 - Profit!
 
