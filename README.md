@@ -1,7 +1,7 @@
 ## How To
 
 - Navigate to either the `single-node` or `cluster` folder
-- Start the Vagrant machine with `vagrant up`.
+- Start the Vagrant machine(s) with `vagrant up`.
 - Profit!
 
 ## License
