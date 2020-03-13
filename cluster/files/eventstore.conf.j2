@@ -1,3 +1,5 @@
-ClusterSize: 1
-RunProjections: All
-ExtIp: {{ ansible_default_ipv4.address }}
+ClusterSize: 3
+DiscoverViaDns: False
+IntIp: {{ eventstore_int_ip }}
+ExtIp: {{ eventstore_ext_ip }}
+GossipSeed: {{ eventstore_gossip_seed }}
