@@ -4,5 +4,4 @@
   
   vars:
   - eventstore_cluster_size: 3
-  - eventstore_discover_via_dns: false
   - eventstore_admin_new_password: "dont_forget_to_change_it"
