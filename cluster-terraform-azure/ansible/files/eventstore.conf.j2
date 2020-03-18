@@ -1,0 +1,7 @@
+ClusterSize: 3
+ClusterDns: eventstore.private.dns
+IntIp: {{ ansible_default_ipv4.address }}
+ExtIp: {{ ansible_default_ipv4.address }}
+IntHttpPrefixes: http://*:2113/
+ExtHttpPrefixes: http://*:2114/
+AddInterfacePrefixes: False

@@ -1,3 +1,4 @@
 .vagrant
 vars.yml
 *.retry
+.DS_Store

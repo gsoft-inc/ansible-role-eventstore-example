@@ -1,0 +1,9 @@
+- hosts: nodes
+  become: true
+  serial: 1
+  roles:
+    - eventstore
+  
+  vars:
+  - eventstore_config_file: ./files/eventstore.conf.j2
+  - eventstore_admin_new_password: "dont_forget_to_change_it"
