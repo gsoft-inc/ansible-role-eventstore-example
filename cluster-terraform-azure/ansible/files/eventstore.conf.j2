@@ -2,6 +2,11 @@ ClusterSize: 3
 ClusterDns: eventstore.private.dns
 IntIp: {{ ansible_default_ipv4.address }}
 ExtIp: {{ ansible_default_ipv4.address }}
+IntTcpPort: 1111
+ExtTcpPort: 1112
+IntHttpPort: 2113
+ExtHttpPort: 2114
 IntHttpPrefixes: http://*:2113/
 ExtHttpPrefixes: http://*:2114/
 AddInterfacePrefixes: False
+ClusterGossipPort: 2113
