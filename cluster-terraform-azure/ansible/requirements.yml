@@ -1,2 +1,2 @@
-- src: yohanb.eventstore
+- src: gsoft.eventstore
   name: eventstore
