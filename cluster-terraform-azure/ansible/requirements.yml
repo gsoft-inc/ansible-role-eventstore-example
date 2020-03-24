@@ -1,0 +1,2 @@
+- src: gsoft.eventstore
+  name: eventstore
