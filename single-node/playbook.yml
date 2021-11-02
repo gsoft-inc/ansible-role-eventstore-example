@@ -3,14 +3,10 @@
     - eventstore
 
   vars:
+    eventstore_generate_node_certitificate: true
     eventstore_config_file: ./files/eventstore.conf.j2
     eventstore_ca_key: "{{ lookup('file', 'ca/ca.key') }}"
     eventstore_ca_cert: "{{ lookup('file', 'ca/ca.crt') }}"
-    node_id: "node{{ ansible_play_hosts_all.index(inventory_hostname) + 1 }}"
-    node_certs:
-      node1:
-        key: "{{ lookup('file', 'node1/node1.key') }}"
-        cert: "{{ lookup('file', 'node1/node1.crt') }}"
 
   pre_tasks:
     - name: Ensure eventstore group exists
@@ -23,26 +19,22 @@
         name: eventstore
         state: present
 
-    - name: Create eventstore ca folder
+    - name: Create eventstore ca cert folder
       ansible.builtin.file:
         path: /etc/eventstore/certs/ca
         state: directory
 
-    - name: Add eventstore CA key
+    - name: Add eventstore ca cert files
       ansible.builtin.copy:
-        content: "{{ eventstore_ca_key }}"
-        dest: /etc/eventstore/certs/ca/ca.key
+        content: "{{ item.content }}"
+        dest: "{{ item.dest }}"
         owner: eventstore
         group: eventstore
         mode: '0600'
-
-    - name: Add eventstore CA cert
-      ansible.builtin.copy:
-        content: "{{ eventstore_ca_cert }}"
-        dest: /etc/eventstore/certs/ca/ca.crt
-        owner: eventstore
-        group: eventstore
-        mode: '0600'
+      no_log: true
+      loop:
+        - { content: "{{ eventstore_ca_key }}", dest: /etc/eventstore/certs/ca/ca.key }
+        - { content: "{{ eventstore_ca_cert }}", dest: /etc/eventstore/certs/ca/ca.crt }
 
     - name: Trust eventstore CA cert
       ansible.builtin.copy:
@@ -51,27 +43,6 @@
         mode: '0644'
       notify:
         - update trusted ca
-
-    - name: Create eventstore node cert folder
-      ansible.builtin.file:
-        path: /etc/eventstore/certs/node
-        state: directory
-
-    - name: Add eventstore node key
-      ansible.builtin.copy:
-        content: "{{ node_certs[node_id].key }}"
-        dest: "/etc/eventstore/certs/node/node.key"
-        owner: eventstore
-        group: eventstore
-        mode: '0600'
-
-    - name: Add eventstore node cert
-      ansible.builtin.copy:
-        content: "{{ node_certs[node_id].cert }}"
-        dest: "/etc/eventstore/certs/node/node.crt"
-        owner: eventstore
-        group: eventstore
-        mode: '0600'
 
   handlers:
     - name: update trusted ca
