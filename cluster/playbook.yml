@@ -1,7 +1,56 @@
 - hosts: all
+  serial: 1
   roles:
     - eventstore
-  
+
   vars:
-  - eventstore_config_file: ./files/eventstore.conf.j2
-  - eventstore_admin_new_password: "dont_forget_to_change_it"
+    eventstore_generate_node_certitificate: true
+    eventstore_config_file: ./files/eventstore.conf.j2
+    eventstore_ca_key: "{{ lookup('file', 'ca/ca.key') }}"
+    eventstore_ca_cert: "{{ lookup('file', 'ca/ca.crt') }}"
+    eventstore_node_cert_ip_addresses:
+      - 127.0.0.1
+      - "{{ eventstore_ext_ip }}"
+    eventstore_node_cert_dns:
+      - localhost
+      - "{{ inventory_hostname }}"
+
+  pre_tasks:
+    - name: Ensure eventstore group exists
+      ansible.builtin.group:
+        name: eventstore
+        state: present
+
+    - name: Ensure eventstore user exists
+      ansible.builtin.user:
+        name: eventstore
+        state: present
+
+    - name: Create eventstore ca cert folder
+      ansible.builtin.file:
+        path: /etc/eventstore/certs/ca
+        state: directory
+
+    - name: Add eventstore ca cert files
+      ansible.builtin.copy:
+        content: "{{ item.content }}"
+        dest: "{{ item.dest }}"
+        owner: eventstore
+        group: eventstore
+        mode: '0600'
+      no_log: true
+      loop:
+        - { content: "{{ eventstore_ca_key }}", dest: /etc/eventstore/certs/ca/ca.key }
+        - { content: "{{ eventstore_ca_cert }}", dest: /etc/eventstore/certs/ca/ca.crt }
+
+    - name: Trust eventstore CA cert
+      ansible.builtin.copy:
+        content: "{{ eventstore_ca_cert }}"
+        dest: /usr/local/share/ca-certificates/eventstore-ca.crt
+        mode: '0644'
+      notify:
+        - update trusted ca
+
+  handlers:
+    - name: update trusted ca
+      shell: /usr/sbin/update-ca-certificates
