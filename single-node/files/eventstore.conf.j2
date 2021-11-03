@@ -1,2 +1,14 @@
-ClusterSize: 1
+---
+# Certificates configuration
+CertificateFile: /etc/eventstore/certs/node/node.crt
+CertificatePrivateKeyFile: /etc/eventstore/certs/node/node.key
+TrustedRootCertificatesPath: /etc/eventstore/certs/ca
+
+# Network configuration
+IntIp: 127.0.0.1
+ExtIp: 127.0.0.1
+EnableExternalTcp: true
+EnableAtomPubOverHTTP: true
+
+# Projections configuration
 RunProjections: All

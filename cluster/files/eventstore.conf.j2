@@ -1,5 +1,19 @@
-ClusterSize: 3
-DiscoverViaDns: False
+---
+# Certificates configuration
+CertificateFile: /etc/eventstore/certs/node/node.crt
+CertificatePrivateKeyFile: /etc/eventstore/certs/node/node.key
+TrustedRootCertificatesPath: /etc/eventstore/certs/ca
+
+# Network configuration
 IntIp: {{ eventstore_int_ip }}
 ExtIp: {{ eventstore_ext_ip }}
+EnableExternalTcp: true
+EnableAtomPubOverHTTP: true
+
+# Cluster gossip
+ClusterSize: 3
+DiscoverViaDns: false
 GossipSeed: {{ eventstore_gossip_seed }}
+
+# Projections configuration
+RunProjections: All

@@ -8,19 +8,19 @@ nodes:
   hosts:
     node1:
       ansible_host: 172.17.177.21
-      ansible_ssh_private_key_file: /vagrant/.vagrant/machines/node1/parallels/private_key
+      ansible_ssh_private_key_file: /vagrant/.vagrant/machines/node1/virtualbox/private_key
       eventstore_int_ip: 172.17.177.21
       eventstore_ext_ip: 172.17.177.21
       eventstore_gossip_seed: 172.17.177.22:2113,172.17.177.23:2113
     node2:
       ansible_host: 172.17.177.22
-      ansible_ssh_private_key_file: /vagrant/.vagrant/machines/node2/parallels/private_key
+      ansible_ssh_private_key_file: /vagrant/.vagrant/machines/node2/virtualbox/private_key
       eventstore_int_ip: 172.17.177.22
       eventstore_ext_ip: 172.17.177.22
       eventstore_gossip_seed: 172.17.177.12:2113,172.17.177.23:2113
     node3:
       ansible_host: 172.17.177.23
-      ansible_ssh_private_key_file: /vagrant/.vagrant/machines/node3/parallels/private_key
+      ansible_ssh_private_key_file: /vagrant/.vagrant/machines/node3/virtualbox/private_key
       eventstore_int_ip: 172.17.177.23
       eventstore_ext_ip: 172.17.177.23
       eventstore_gossip_seed: 172.17.177.12:2113,172.17.177.22:2113
